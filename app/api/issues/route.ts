@@ -22,8 +22,6 @@ export async function POST(request: NextRequest) {
         data: { title: body.title, description: body.description}
     })
 
-    console.log(newIssue)
-
     return NextResponse.json(newIssue, {status: 201})
 
 }
