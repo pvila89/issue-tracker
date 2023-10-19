@@ -1,20 +1,27 @@
 'use client'
 
-import 'easymde/dist/easymde.min.css'
+import 'easymde/dist/easymde.min.css';
 
-import { useState } from 'react'
+import { useState } from 'react';
 
-import axios from 'axios'
-import { useRouter } from 'next/navigation'
-import { Controller, useForm } from 'react-hook-form'
-import SimpleMDE from 'react-simplemde-editor'
-import { z } from 'zod'
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import {
+  Controller,
+  useForm,
+} from 'react-hook-form';
+import SimpleMDE from 'react-simplemde-editor';
+import { z } from 'zod';
 
-import ErrorMessage from '@/app/components/ErrorMessage'
-import Spinner from '@/app/components/Spinner'
-import { createIssueSchema } from '@/app/validationSchemas'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Button, Callout, TextField } from '@radix-ui/themes'
+import ErrorMessage from '@/app/components/ErrorMessage';
+import Spinner from '@/app/components/Spinner';
+import { createIssueSchema } from '@/app/validationSchemas';
+import { zodResolver } from '@hookform/resolvers/zod';
+import {
+  Button,
+  Callout,
+  TextField,
+} from '@radix-ui/themes';
 
 type IssueForm = z.infer<typeof createIssueSchema>
 
@@ -36,6 +43,7 @@ const NewIssuePage = () => {
             setSubmitting(true)
             await axios.post('/api/issues', data)
             router.push('/issues')
+            router.refresh()
         } catch (error) {
             setSubmitting(false)
             setError('An unexpected error ocurred')
