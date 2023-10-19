@@ -1,10 +1,10 @@
-import React from 'react'
+import React from 'react';
 
-import dynamic from 'next/dynamic'
+import dynamic from 'next/dynamic';
 
-import IssueFormSkeleton from './loading'
+import IssueFormSkeleton from './loading';
 
-const IssueForm = dynamic(() => import('@/app/issues/components/IssueForm'), {
+const IssueForm = dynamic(() => import('@/app/issues/_components/IssueForm'), {
     ssr: false,
     loading: () => <IssueFormSkeleton />,
 })
