@@ -3,7 +3,7 @@ import NextLink from 'next/link'
 import { IssueStatusBadge, Link } from '@/app/components'
 import prisma from '@/prisma/client'
 import { Issue, Status } from '@prisma/client'
-import { ArrowUpIcon } from '@radix-ui/react-icons'
+import { ArrowDownIcon, ArrowUpIcon } from '@radix-ui/react-icons'
 import { Table, TableColumnHeaderCell } from '@radix-ui/themes'
 
 import IssueActions from './IssueActions'
@@ -12,6 +12,7 @@ interface Props {
     searchParams: {
         status: Status
         orderBy: keyof Issue
+        orderDirection: 'asc' | 'desc'
     }
 }
 
@@ -36,8 +37,15 @@ const IssuesPage = async ({ searchParams }: Props) => {
         ? searchParams.status
         : undefined
 
+    const orderBy = columns
+        .map((column) => column.value)
+        .includes(searchParams.orderBy)
+        ? { [searchParams.orderBy]: searchParams.orderDirection }
+        : undefined
+
     const issues = await prisma.issue.findMany({
         where: { status },
+        orderBy,
     })
     return (
         <div>
@@ -52,14 +60,26 @@ const IssuesPage = async ({ searchParams }: Props) => {
                                         query: {
                                             ...searchParams,
                                             orderBy: column.value,
+                                            orderDirection:
+                                                column.value ===
+                                                    searchParams.orderBy &&
+                                                searchParams.orderDirection ===
+                                                    'asc'
+                                                    ? 'desc'
+                                                    : 'asc',
                                         },
                                     }}
                                 >
                                     {column.label}
                                 </NextLink>
-                                {column.value === searchParams.orderBy && (
-                                    <ArrowUpIcon className="inline" />
-                                )}
+                                {column.value === searchParams.orderBy &&
+                                    searchParams.orderDirection === 'asc' && (
+                                        <ArrowUpIcon className="inline" />
+                                    )}
+                                {column.value === searchParams.orderBy &&
+                                    searchParams.orderDirection === 'desc' && (
+                                        <ArrowDownIcon className="inline" />
+                                    )}
                             </TableColumnHeaderCell>
                         ))}
                     </Table.Row>
