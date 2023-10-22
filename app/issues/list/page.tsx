@@ -1,12 +1,24 @@
-import NextLink from 'next/link'
+import NextLink from 'next/link';
 
-import { IssueStatusBadge, Link } from '@/app/components'
-import prisma from '@/prisma/client'
-import { Issue, Status } from '@prisma/client'
-import { ArrowDownIcon, ArrowUpIcon } from '@radix-ui/react-icons'
-import { Table, TableColumnHeaderCell } from '@radix-ui/themes'
+import {
+  IssueStatusBadge,
+  Link,
+} from '@/app/components';
+import prisma from '@/prisma/client';
+import {
+  Issue,
+  Status,
+} from '@prisma/client';
+import {
+  ArrowDownIcon,
+  ArrowUpIcon,
+} from '@radix-ui/react-icons';
+import {
+  Table,
+  TableColumnHeaderCell,
+} from '@radix-ui/themes';
 
-import IssueActions from './IssueActions'
+import IssueActions from './IssueActions';
 
 interface Props {
     searchParams: {
@@ -54,7 +66,7 @@ const IssuesPage = async ({ searchParams }: Props) => {
                 <Table.Header>
                     <Table.Row>
                         {columns.map((column) => (
-                            <TableColumnHeaderCell key={column.value}>
+                            <TableColumnHeaderCell key={column.value} className={column.className}>
                                 <NextLink
                                     href={{
                                         query: {
