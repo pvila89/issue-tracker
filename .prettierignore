@@ -3,3 +3,4 @@
 *.html
 *.yml
 .stylelintrc
+**/app/sentry-example-page
