@@ -1,23 +1,16 @@
 'use client'
 
-import React from 'react';
+import React from 'react'
+
+import { useRouter, useSearchParams } from 'next/navigation'
 
 import {
-  useRouter,
-  useSearchParams,
-} from 'next/navigation';
-
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  DoubleArrowLeftIcon,
-  DoubleArrowRightIcon,
-} from '@radix-ui/react-icons';
-import {
-  Button,
-  Flex,
-  Text,
-} from '@radix-ui/themes';
+    ChevronLeftIcon,
+    ChevronRightIcon,
+    DoubleArrowLeftIcon,
+    DoubleArrowRightIcon,
+} from '@radix-ui/react-icons'
+import { Button, Flex, Text } from '@radix-ui/themes'
 
 interface Props {
     itemCount: number
