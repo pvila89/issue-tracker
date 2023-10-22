@@ -1,17 +1,22 @@
 'use client'
 
-import React from 'react'
+import React from 'react';
 
-import axios from 'axios'
-import toast, { Toaster } from 'react-hot-toast'
-import Skeleton from 'react-loading-skeleton'
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import toast, { Toaster } from 'react-hot-toast';
+import Skeleton from 'react-loading-skeleton';
 
-import { Issue, User } from '@prisma/client'
-import { Select } from '@radix-ui/themes'
-import { useQuery } from '@tanstack/react-query'
+import {
+  Issue,
+  User,
+} from '@prisma/client';
+import { Select } from '@radix-ui/themes';
+import { useQuery } from '@tanstack/react-query';
 
 const AssigneeSelect = ({ issue }: { issue: Issue }) => {
     const { data: users, error, isLoading } = useUsers()
+    const router = useRouter()
 
     if (isLoading) return <Skeleton />
 
@@ -22,6 +27,8 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
             .patch('/api/issues/' + issue.id, {
                 assignedToUserId: userId === 'unassigned' ? null : userId,
             })
+            .then(() => router.refresh())
+
             .catch(() => {
                 toast.error('Changes could not be saved')
             })
